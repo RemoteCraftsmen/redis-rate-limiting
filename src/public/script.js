@@ -110,6 +110,7 @@ const onResetButtonClick = e => {
     responses.unknown = 0;
     sendButton.disabled = false;
     resultDiv.innerHTML = '';
+    timeout = null;
 };
 
 document.addEventListener(
