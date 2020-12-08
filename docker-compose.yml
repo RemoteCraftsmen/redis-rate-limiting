@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+    redis:
+        image: redis:latest
+        container_name: redis.redisratelimiting.docker
+        restart: unless-stopped
+        volumes:
+            - ~/data/redis.redisratelimiting.docker:/data
+        environment:
+            REDIS_PASSWORD: pass
+        command:
+            - 'bash'
+            - '-c'
+            - 'docker-entrypoint.sh --requirepass "$$REDIS_PASSWORD"'
+        ports:
+            - 127.0.0.1:6379:6379
+        networks:
+            - global
+networks:
+    global:
+        external: true
