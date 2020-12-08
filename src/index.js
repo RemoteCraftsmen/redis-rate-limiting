@@ -11,8 +11,7 @@ require('dotenv').config();
 const app = express();
 const redisClient = redis.createClient({
     host: process.env.REDIS_HOST,
-    port: process.env.REDIS_PORT,
-    password: process.env.REDIS_PASS
+    port: process.env.REDIS_PORT
 });
 
 redisClient.get = promisify(redisClient.get);
