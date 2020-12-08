@@ -50,9 +50,9 @@ const onSendButtonClick = async e => {
 
     const callPing = async () => {
         try {
-            const response = await axios.get(pingUrl + '?nocache=' + new Date().getTime(), {
+            const response = await axios.get(pingUrl, {
                 headers: {
-                    'Cache-Control': 'no-cache',
+                    'Cache-Control': 'no-cache, no-store, must-revalidate',
                     'Pragma': 'no-cache',
                     'Expires': '0'
                 }
