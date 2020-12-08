@@ -19,28 +19,6 @@ redisClient.set = promisify(redisClient.set);
 
 app.use(bodyParser.json());
 
-const pingEndpointController = {
-    index(req, res) {
-        return res.send('PONG');
-    }
-};
-
-const setRedisRateLimitingController = {
-    async index(req, res) {
-        try {
-            const { limit } = req.body;
-
-            await redisClient.set('ratelimit', parseInt(limit));
-
-            return res.send({ limit });
-        } catch (err) {
-            console.error(err);
-
-            return res.sendStatus(500);
-        }
-    }
-};
-
 const limiter = async (req, res, next) => {
     const limit = await redisClient.get('ratelimit');
 
@@ -58,8 +36,17 @@ const limiter = async (req, res, next) => {
 
 app.use('/', express.static(path.join(__dirname, './public')));
 
-app.get('/api/ping', limiter, (...args) => pingEndpointController.index(...args));
-app.put('/api/set-limit', (...args) => setRedisRateLimitingController.index(...args));
+app.get('/api/ping', limiter, (req, res) => {
+    return res.send('PONG');
+});
+
+app.put('/api/set-limit', async (req, res) => {
+    const { limit } = req.body;
+
+    await redisClient.set('ratelimit', parseInt(limit));
+
+    return res.send({ limit });
+});
 
 app.listen(process.env.PORT, () => {
     console.log(`APP is listening on port: ${process.env.PORT}`);

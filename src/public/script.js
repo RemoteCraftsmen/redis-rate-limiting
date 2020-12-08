@@ -3,9 +3,8 @@ const resetButton = document.querySelector('#reset-button');
 const limitSelect = document.querySelector('#limit-select');
 const timerDiv = document.querySelector('#timer');
 const resultDiv = document.querySelector('#result');
-const baseUrl = 'http://localhost:3000';
-const pingUrl = `${baseUrl}/api/ping`;
-const setLimitUrl = `${baseUrl}/api/set-limit`;
+const pingUrl = '/api/ping';
+const setLimitUrl = '/api/set-limit';
 let responses = {
     successful: 0,
     limited: 0,
@@ -63,11 +62,7 @@ const onSendButtonClick = async e => {
         calls.push(callPing());
     }
 
-    try {
-        await Promise.all(calls);
-    } catch (err) {
-        console.error(err);
-    }
+    await Promise.all(calls);
 
     results.forEach(result => {
         if (!result || !result.status || (result.status !== 200 && result.status !== 429)) {
