@@ -52,7 +52,9 @@ const onSendButtonClick = async e => {
         try {
             const response = await axios.get(pingUrl, {
                 headers: {
-                    'Cache-Control': 'no-cache'
+                    'Cache-Control': 'no-cache',
+                    'Pragma': 'no-cache',
+                    'Expires': '0'
                 }
             });
 
