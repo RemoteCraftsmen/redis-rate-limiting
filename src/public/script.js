@@ -6,7 +6,6 @@ const resultDiv = document.querySelector('#result');
 const baseUrl = 'http://localhost:3000';
 const pingUrl = `${baseUrl}/api/ping`;
 const setLimitUrl = `${baseUrl}/api/set-limit`;
-const pingCount = 5;
 let responses = {
     successful: 0,
     limited: 0,
@@ -60,7 +59,7 @@ const onSendButtonClick = async e => {
         }
     };
 
-    for (let i = 0; i < pingCount; i++) {
+    for (let i = 0; i < 5; i++) {
         calls.push(callPing());
     }
 
@@ -121,7 +120,6 @@ const onResetButtonClick = e => {
 document.addEventListener(
     'DOMContentLoaded',
     async () => {
-        sendButton.innerHTML = 'Send 5 requests';
         resetButton.disabled = true;
         limitSelect.value = 5;
 

@@ -5,10 +5,6 @@ services:
         image: redis:latest
         container_name: redis.redisratelimiting.docker
         restart: unless-stopped
-        volumes:
-            - ~/data/redis.redisratelimiting.docker:/data
-        environment:
-            REDIS_PASSWORD: pass
         command:
             - 'bash'
             - '-c'
