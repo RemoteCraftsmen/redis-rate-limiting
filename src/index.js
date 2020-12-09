@@ -6,7 +6,9 @@ const RateLimit = require('express-rate-limit');
 const RedisStore = require('rate-limit-redis');
 const { promisify } = require('util');
 
-require('dotenv').config();
+if (process.env.NODE_ENV === 'development') {
+    require('dotenv').config();
+}
 
 const app = express();
 
