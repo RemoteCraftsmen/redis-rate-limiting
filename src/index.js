@@ -51,6 +51,6 @@ app.put('/api/set-limit', async (req, res) => {
     return res.send({ limit });
 });
 
-app.listen(process.env.PORT, () => {
-    console.log(`APP is listening on port: ${process.env.PORT}`);
+app.listen(process.env.PORT || 3000, () => {
+    console.log(`APP is listening on port: ${process.env.PORT || 3000}`);
 });
