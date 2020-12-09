@@ -9,7 +9,7 @@
 ## Development
 
 ```
-git clone git clone https://github.com/RemoteCraftsmen/redis-rate-limiting/
+git clone https://github.com/RemoteCraftsmen/redis-rate-limiting/
 
 # copy file and set proper data inside
 cp .env.example .env
@@ -18,14 +18,15 @@ cp .env.example .env
 npm cache clean && npm install
 
 # run docker compose or install redis manually
+docker network create global
 docker-compose up -d --build
 
 npm run dev
 
 ```
 
-## Deployment
+## Heroku deployment (1 click install)
 
-<a href="https://heroku.com/deploy?template=https://github.com/RemoteCraftsmen/redis-rate-limiting/tree/feature/deploy-to-heroku-button">
+<a href="https://heroku.com/deploy?template=https://github.com/RemoteCraftsmen/redis-rate-limiting">
   <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy">
 </a>
