@@ -1,0 +1,21 @@
+{
+    "name": "Redis Rate Limiting",
+    "description": "App for testing request rate limits in NodeJS, Express and Redis",
+    "repository": "https://github.com/RemoteCraftsmen/redis-rate-limiting",
+    "keywords": ["node", "express", "redis"],
+    "addons": ["heroku-redis:hobby-dev"],
+    "env": {
+        "PORT": {
+            "description": "Port for NodeJS",
+            "value": "3000"
+        },
+        "REDIS_HOST": {
+            "description": "Redis host for configuration",
+            "value": "127.0.0.1"
+        },
+        "REDIS_PORT": {
+            "description": "Redis port for configuration",
+            "value": "6379"
+        }
+    }
+}
