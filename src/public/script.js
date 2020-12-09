@@ -116,6 +116,8 @@ const onResetButtonClick = e => {
     responses.unknown = 0;
     sendButton.disabled = false;
     resultDiv.innerHTML = '';
+    timerDiv.innerHTML = '';
+    resetButton.disabled = true;
     timeout = null;
 };
 
