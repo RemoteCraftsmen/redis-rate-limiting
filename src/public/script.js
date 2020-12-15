@@ -92,8 +92,6 @@ const onSendButtonClick = e => {
             timerDiv.innerHTML = `${counter} seconds left`;
         }
     }, 1000);
-
-    setTimeout(() => {}, 10 * 1000 + 150);
 };
 
 const onResetButtonClick = e => {
