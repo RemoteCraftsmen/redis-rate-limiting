@@ -85,7 +85,7 @@ const onSendButtonClick = e => {
             clearInterval(counterInterval);
         }
 
-        if (successfulRequests + blockedRequests === requestsToSend || tick === 200) {
+        if (successfulRequests + blockedRequests === requestsToSend && tick > 100 || tick > 200) {
             clearInterval(requestInterval);
         }
     }, 100);
@@ -102,7 +102,6 @@ const onSendButtonClick = e => {
 const onResetButtonClick = e => {
     e.preventDefault();
 
-    sendButton.disabled = false;
     resultDiv.innerHTML = '';
     resetButton.classList.add('d-none');
 };
@@ -116,5 +115,4 @@ document.addEventListener(
 );
 
 sendButton.addEventListener('click', onSendButtonClick);
-
 resetButton.addEventListener('click', onResetButtonClick);
