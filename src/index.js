@@ -18,18 +18,14 @@ const redisClient = redis.createClient(
 
 app.use(bodyParser.json());
 
-const limiter = async (req, res, next) => {
-    const limiter = new RateLimit({
-        store: new RedisStore({
-            client: redisClient,
-            expiry: 10
-        }),
-        max: 10,
-        windowMs: 10 * 1000
-    });
-
-    return limiter(req, res, next);
-};
+const limiter = new RateLimit({
+    store: new RedisStore({
+        client: redisClient,
+        expiry: 10
+    }),
+    max: 10,
+    windowMs: 10 * 1000
+});
 
 app.use('/', express.static(path.join(__dirname, './public')));
 

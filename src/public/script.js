@@ -8,32 +8,14 @@ const pingUrl = '/api/ping';
 const onSendButtonClick = e => {
     e.preventDefault();
 
-    const requestLimit = parseInt(limitSelect.value);
-    let singleRequests = 0;
-    let doubleRequests = 0;
-
-    switch (requestLimit) {
-        case 5:
-            singleRequests = 5;
-            break;
-        case 10:
-            singleRequests = 10;
-            break;
-        case 15:
-            singleRequests = 5;
-            doubleRequests = 5;
-            break;
-        case 20:
-            doubleRequests = 10;
-            break;
-        default:
-            break;
-    }
-
     let successfullRequests = 0;
     let blockedRequests = 0;
     let counter = 10;
-    let interval;
+    let requestInterval;
+    let tick = 0,
+        requestsSentCount = 0;
+    const requestsToSend = parseInt(limitSelect.value);
+    const whenToSendTick = Math.ceil(100 / requestsToSend);
 
     sendButton.disabled = true;
     limitSelect.disabled = true;
@@ -56,29 +38,24 @@ const onSendButtonClick = e => {
 
     timerDiv.innerHTML = `${counter} seconds left`;
 
-    interval = setInterval(async () => {
-        let requests = [];
+    requestInterval = setInterval(async () => {
+        if (tick % whenToSendTick === 0) {
+            await callPing();
+        }
+
+        if (requestsSentCount === requestsToSend) {
+            clearInterval(requestInterval);
+        }
+
+        tick++;
+    }, 100);
+
+    counterInterval = setInterval(() => {
         counter--;
 
         if (counter) {
             timerDiv.innerHTML = `${counter} seconds left`;
         }
-
-        if (doubleRequests) {
-            for (let i = 0; i < 2; i++) {
-                requests.push(callPing());
-            }
-
-            doubleRequests--;
-        }
-
-        if (!doubleRequests && singleRequests) {
-            requests.push(callPing());
-
-            singleRequests--;
-        }
-
-        await Promise.all(requests);
     }, 1000);
 
     setTimeout(() => {
@@ -86,7 +63,8 @@ const onSendButtonClick = e => {
         sendButton.disabled = false;
         limitSelect.disabled = false;
         timerDiv.innerHTML = '';
-        clearInterval(interval);
+        clearInterval(requestInterval);
+        clearInterval(counterInterval);
 
         let result = document.createElement('p');
 
