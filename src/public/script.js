@@ -4,53 +4,43 @@ const limitSelect = document.querySelector('#limit-select');
 const timerDiv = document.querySelector('#timer');
 const resultDiv = document.querySelector('#result');
 const pingUrl = '/api/ping';
-const setLimitUrl = '/api/set-limit';
-let responses = {
-    successful: 0,
-    limited: 0,
-    unknown: 0
-};
-let timeout;
 
-const onLimitSelectChange = async e => {
-    try {
-        await axios.put(setLimitUrl, { limit: e.target.value });
-    } catch (err) {
-        console.error(err);
-    }
-};
-
-const onSendButtonClick = async e => {
+const onSendButtonClick = e => {
     e.preventDefault();
 
-    if (!timeout) {
-        let interval;
-        let counter = 10;
+    const requestLimit = parseInt(limitSelect.value);
+    let singleRequests = 0;
+    let doubleRequests = 0;
 
-        limitSelect.disabled = true;
-
-        timeout = setTimeout(() => {
-            resetButton.disabled = false;
-            sendButton.disabled = true;
-            limitSelect.disabled = false;
-            clearInterval(interval);
-            timerDiv.innerHTML = 'Done, reset your stats';
-        }, 10 * 1000);
-
-        timerDiv.innerHTML = `${counter} seconds left`;
-
-        interval = setInterval(() => {
-            counter--;
-            timerDiv.innerHTML = `${counter} seconds left`;
-        }, 1000);
+    switch (requestLimit) {
+        case 5:
+            singleRequests = 5;
+            break;
+        case 10:
+            singleRequests = 10;
+            break;
+        case 15:
+            singleRequests = 5;
+            doubleRequests = 5;
+            break;
+        case 20:
+            doubleRequests = 10;
+            break;
+        default:
+            break;
     }
 
-    let results = [];
-    let calls = [];
+    let successfullRequests = 0;
+    let blockedRequests = 0;
+    let counter = 10;
+    let interval;
+
+    sendButton.disabled = true;
+    limitSelect.disabled = true;
 
     const callPing = async () => {
         try {
-            const response = await axios.get(pingUrl, {
+            await axios.get(pingUrl, {
                 headers: {
                     'Cache-Control': 'no-cache, no-store, must-revalidate',
                     Pragma: 'no-cache',
@@ -58,73 +48,82 @@ const onSendButtonClick = async e => {
                 }
             });
 
-            results.push(response);
+            successfullRequests++;
         } catch (err) {
-            results.push(err.response);
+            blockedRequests++;
         }
     };
 
-    for (let i = 0; i < 2; i++) {
-        calls.push(callPing());
-    }
+    timerDiv.innerHTML = `${counter} seconds left`;
 
-    await Promise.all(calls);
+    interval = setInterval(async () => {
+        let requests = [];
+        counter--;
 
-    results.forEach(result => {
-        if (!result || !result.status || (result.status !== 200 && result.status !== 429)) {
-            responses.unknown++;
+        if (counter) {
+            timerDiv.innerHTML = `${counter} seconds left`;
         }
-        if (result.status === 200) {
-            responses.successful++;
+
+        if (doubleRequests) {
+            for (let i = 0; i < 2; i++) {
+                requests.push(callPing());
+            }
+
+            doubleRequests--;
         }
-        if (result.status === 429) {
-            responses.limited++;
+
+        if (!doubleRequests && singleRequests) {
+            requests.push(callPing());
+
+            singleRequests--;
         }
-    });
 
-    resultDiv.innerHTML = '';
+        await Promise.all(requests);
+    }, 1000);
 
-    if (responses.successful) {
-        const successfullMessage = document.createElement('h3');
+    setTimeout(() => {
+        resetButton.classList.remove('d-none');
+        sendButton.disabled = false;
+        limitSelect.disabled = false;
+        timerDiv.innerHTML = '';
+        clearInterval(interval);
 
-        successfullMessage.style.color = 'green';
-        successfullMessage.innerHTML = `${responses.successful} requests were handled properly (status 200)`;
-        resultDiv.appendChild(successfullMessage);
-    }
+        let result = document.createElement('p');
 
-    if (responses.limited) {
-        const limitedMessage = document.createElement('h3');
+        result.classList.add('lead');
+        result.innerHTML = `Sent ${limitSelect.value} requests. `;
 
-        limitedMessage.style.color = 'red';
-        limitedMessage.innerHTML = `${responses.limited} requests have been blocked by rate limit (status 429)`;
-        resultDiv.appendChild(limitedMessage);
-    }
+        if (successfullRequests) {
+            const successfullMessage = document.createElement('span');
 
-    if (responses.unknown) {
-        const unknownMessage = document.createElement('h3');
+            successfullMessage.style.color = 'green';
+            successfullMessage.innerHTML = `Handled ${successfullRequests} requests. `;
+            result.appendChild(successfullMessage);
+        }
 
-        unknownMessage.style.color = 'red';
-        unknownMessage.innerHTML = `${responses.unknown} requests had server error (different status)`;
-        resultDiv.appendChild(unknownMessage);
-    }
+        if (blockedRequests) {
+            const limitedMessage = document.createElement('span');
+
+            limitedMessage.style.color = 'red';
+            limitedMessage.innerHTML = `${blockedRequests} requests blocked `;
+            result.appendChild(limitedMessage);
+        }
+
+        resultDiv.appendChild(result);
+    }, 10 * 1000 + 100);
 };
 
 const onResetButtonClick = e => {
     e.preventDefault();
-    responses.successful = 0;
-    responses.limited = 0;
-    responses.unknown = 0;
+
     sendButton.disabled = false;
     resultDiv.innerHTML = '';
-    timerDiv.innerHTML = '';
-    resetButton.disabled = true;
-    timeout = null;
+    resetButton.classList.add('d-none');
 };
 
 document.addEventListener(
     'DOMContentLoaded',
     async () => {
-        resetButton.disabled = true;
         limitSelect.value = 5;
 
         try {
@@ -135,8 +134,6 @@ document.addEventListener(
     },
     false
 );
-
-limitSelect.addEventListener('change', onLimitSelectChange);
 
 sendButton.addEventListener('click', onSendButtonClick);
 
