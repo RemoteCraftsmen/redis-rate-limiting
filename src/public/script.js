@@ -123,14 +123,8 @@ const onResetButtonClick = e => {
 
 document.addEventListener(
     'DOMContentLoaded',
-    async () => {
+    () => {
         limitSelect.value = 5;
-
-        try {
-            await axios.put(setLimitUrl, { limit: 5 });
-        } catch (err) {
-            console.error(err);
-        }
     },
     false
 );
