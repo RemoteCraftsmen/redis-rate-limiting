@@ -41,6 +41,8 @@ const onSendButtonClick = e => {
     requestInterval = setInterval(async () => {
         if (tick % whenToSendTick === 0) {
             await callPing();
+
+            requestsSentCount++;
         }
 
         if (requestsSentCount === requestsToSend) {
@@ -88,7 +90,7 @@ const onSendButtonClick = e => {
         }
 
         resultDiv.appendChild(result);
-    }, 10 * 1000 + 100);
+    }, 10 * 1000 + 150);
 };
 
 const onResetButtonClick = e => {
