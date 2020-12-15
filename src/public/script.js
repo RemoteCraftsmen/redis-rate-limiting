@@ -38,7 +38,7 @@ const onSendButtonClick = e => {
         }
     };
 
-    timerDiv.innerHTML = `${counter} seconds left`;
+    timerDiv.innerHTML = `Wait ${counter} seconds to test again`;
 
     let result = document.createElement('p');
     result.classList.add('lead');
@@ -89,7 +89,7 @@ const onSendButtonClick = e => {
         counter--;
 
         if (counter) {
-            timerDiv.innerHTML = `${counter} seconds left`;
+            timerDiv.innerHTML = `Wait ${counter} seconds to test again`;
         }
     }, 1000);
 };

@@ -1,18 +1,20 @@
-#timer,
 #result,
-#test-button,
 #limit-select {
     display: block;
     margin-top: 1em;
     margin-bottom: 1em;
 }
 
-#limit-select,
-#test-button {
+#button-group,
+#limit-select {
     margin-left: auto;
     margin-right: auto;
 }
 
 #limit-select {
     max-width: 280px;
+}
+
+#result-group {
+    text-align: center;
 }

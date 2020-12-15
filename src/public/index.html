@@ -27,12 +27,17 @@
                         <option value="15">15 requests / 10 seconds</option>
                         <option value="20">20 requests / 10 seconds</option>
                     </select>
-                    <button id="test-button" type="button" class="btn btn-primary">Send</button>
+                    <div id="button-group" class="d-flex justify-content-center">
+                        <button id="test-button" type="button" class="btn btn-primary">Send</button>
+                        <span id="timer" class="p-2"></span>
+                    </div>
                 </div>
             </form>
-            <div id="timer"></div>
-            <div id="result"></div>
-            <button id="reset-button" type="button" class="btn btn-secondary btn-sm d-none">Clear history</button>
+
+            <div id="result-group">
+                <div id="result"></div>
+                <button id="reset-button" type="button" class="btn btn-secondary btn-sm d-none">Clear history</button>
+            </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script src="script.js"></script>
