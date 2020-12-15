@@ -4,16 +4,18 @@ const limitSelect = document.querySelector('#limit-select');
 const timerDiv = document.querySelector('#timer');
 const resultDiv = document.querySelector('#result');
 const pingUrl = '/api/ping';
+let resultAmount = 0;
 
 const onSendButtonClick = e => {
     e.preventDefault();
 
-    let successfullRequests = 0;
-    let blockedRequests = 0;
-    let counter = 10;
-    let requestInterval;
-    let tick = 0,
-        requestsSentCount = 0;
+    let counter = 10,
+        requestInterval,
+        tick = 0,
+        requestsSentCount = 0,
+        successfullRequests = 0,
+        blockedRequests = 0;
+
     const requestsToSend = parseInt(limitSelect.value);
     const whenToSendTick = Math.ceil(100 / requestsToSend);
 
@@ -38,11 +40,52 @@ const onSendButtonClick = e => {
 
     timerDiv.innerHTML = `${counter} seconds left`;
 
+    let result = document.createElement('p');
+
+    result.classList.add('lead');
+    result.id = `result-${resultAmount}`;
+
+    const sentMessage = document.createElement('span');
+
+    sentMessage.classList.add('sent');
+
+    const successfullMessage = document.createElement('span');
+
+    successfullMessage.classList.add('successfull');
+    successfullMessage.style.color = 'green';
+
+    const blockedMessage = document.createElement('span');
+
+    blockedMessage.classList.add('blocked');
+    blockedMessage.style.color = 'red';
+
+    result.appendChild(sentMessage);
+    result.appendChild(successfullMessage);
+    result.appendChild(blockedMessage);
+
+    resultDiv.prepend(result);
+
     requestInterval = setInterval(async () => {
         if (tick % whenToSendTick === 0) {
             await callPing();
 
             requestsSentCount++;
+
+            const currentResultsSent = document.querySelector(`#result-${resultAmount} .sent`);
+
+            currentResultsSent.innerHTML = `Sent ${successfullRequests + blockedRequests} requests. `;
+
+            if (successfullRequests) {
+                const currentResultsSuccessfull = document.querySelector(`#result-${resultAmount} .successfull`);
+
+                currentResultsSuccessfull.innerHTML = `Handled ${successfullRequests} requests. `;
+            }
+
+            if (blockedRequests) {
+                const currentResultsBlocked = document.querySelector(`#result-${resultAmount} .blocked`);
+
+                currentResultsBlocked.innerHTML = `${blockedRequests} requests blocked. `;
+            }
         }
 
         if (requestsSentCount === requestsToSend) {
@@ -68,28 +111,7 @@ const onSendButtonClick = e => {
         clearInterval(requestInterval);
         clearInterval(counterInterval);
 
-        let result = document.createElement('p');
-
-        result.classList.add('lead');
-        result.innerHTML = `Sent ${limitSelect.value} requests. `;
-
-        if (successfullRequests) {
-            const successfullMessage = document.createElement('span');
-
-            successfullMessage.style.color = 'green';
-            successfullMessage.innerHTML = `Handled ${successfullRequests} requests. `;
-            result.appendChild(successfullMessage);
-        }
-
-        if (blockedRequests) {
-            const limitedMessage = document.createElement('span');
-
-            limitedMessage.style.color = 'red';
-            limitedMessage.innerHTML = `${blockedRequests} requests blocked `;
-            result.appendChild(limitedMessage);
-        }
-
-        resultDiv.appendChild(result);
+        resultAmount++;
     }, 10 * 1000 + 150);
 };
 
