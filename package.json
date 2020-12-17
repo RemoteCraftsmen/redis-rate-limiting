@@ -1,11 +1,12 @@
 {
     "name": "redis-rate-limiting",
     "version": "0.0.1",
-    "description": "Redis request rate limit demo",
+    "description": "Redis requests rate limit demo",
     "keywords": [
         "NodeJS",
         "ExpressJS",
-        "Redis"
+        "Redis",
+        "Rate limit"
     ],
     "main": "src/index.js",
     "scripts": {
