@@ -1,16 +1,20 @@
 {
     "name": "redis-rate-limiting",
-    "version": "1.0.0",
-    "description": "",
+    "version": "0.0.1",
+    "description": "Redis request rate limit demo",
+    "keywords": [
+        "NodeJS",
+        "ExpressJS",
+        "Redis"
+    ],
     "main": "src/index.js",
     "scripts": {
-        "dev": "NODE_ENV=development nodemon src/index.js"
+        "dev": "nodemon src/index.js"
     },
-    "author": "",
-    "license": "ISC",
+    "author": "RemoteCraftsmen",
+    "license": "MIT",
     "dependencies": {
         "dotenv": "^8.2.0",
-        "body-parser": "^1.19.0",
         "express": "^4.17.1",
         "express-rate-limit": "^5.2.3",
         "rate-limit-redis": "^2.0.0",
