@@ -27,15 +27,19 @@ npm run dev
 
 ```
 
-## Google cloud run deployment
+## Deployment
+
+To make deploys work, you need to create free account in https://redislabs.com/try-free/ and get Redis' instance informations - REDIS_ENDPOINT_URI and REDIS_PASSWORD. You must pass them as environmental variables.
+
+### Google cloud run deployment
 
 [![Run on Google
 Cloud](https://deploy.cloud.run/button.svg)](https://deploy.cloud.run/?git_repo=https://github.com/RemoteCraftsmen/redis-rate-limiting/tree/three-deploy-buttons)
 
-## Heroku deployment (1 click install)
+### Heroku deployment (1 click install)
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
-## Vercel deployment
+### Vercel deployment
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2FRemoteCraftsmen%2Fredis-rate-limiting%2Ftree%2Fthree-deploy-buttons&env=REDIS_ENDPOINT_URI,REDIS_PASSWORD)
