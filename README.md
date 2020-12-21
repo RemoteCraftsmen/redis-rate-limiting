@@ -27,6 +27,15 @@ npm run dev
 
 ```
 
+## Google cloud run deployment
+
+[![Run on Google
+Cloud](https://deploy.cloud.run/button.svg)](https://deploy.cloud.run/?git_repo=https://github.com/RemoteCraftsmen/redis-rate-limiting/tree/three-deploy-buttons)
+
 ## Heroku deployment (1 click install)
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?env[WEB_CONCURRENCY]=1)
+
+## Vercel deployment
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2FRemoteCraftsmen%2Fredis-rate-limiting%2Ftree%2Fthree-deploy-buttons&env=REDIS_ENDPOINT_URI,REDIS_PASSWORD)
