@@ -11,6 +11,11 @@
         "REDIS_PASSWORD": {
             "description": "Redis password",
             "required": true
+        },
+        "WEB_CONCURRENCY": {
+            "description": "Number of Node processes (on Heroku)",
+            "required": false,
+            "value": "1"
         }
     }
 }
