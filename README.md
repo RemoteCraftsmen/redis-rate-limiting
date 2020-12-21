@@ -34,7 +34,7 @@ To make deploys work, you need to create free account in https://redislabs.com/t
 ### Google cloud run deployment
 
 [![Run on Google
-Cloud](https://deploy.cloud.run/button.svg)](https://deploy.cloud.run/?git_repo=https://github.com/RemoteCraftsmen/redis-rate-limiting/tree/three-deploy-buttons)
+Cloud](https://deploy.cloud.run/button.svg)](https://deploy.cloud.run/?git_repo=https://github.com/RemoteCraftsmen/redis-rate-limiting.git&revision=three-deploy-buttons)
 
 ### Heroku deployment (1 click install)
 
