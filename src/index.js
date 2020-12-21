@@ -10,7 +10,7 @@ const { REDIS_ENDPOINT_URI, REDIS_HOST, REDIS_PORT, REDIS_PASSWORD, PORT } = pro
 
 const app = express();
 
-const redisEndpointUri = REDIS_ENDPOINT_URI || `redis://${REDIS_HOST}:${REDIS_PORT}`;
+const redisEndpointUri = REDIS_ENDPOINT_URI ? `redis://${REDIS_ENDPOINT_URI}` : `redis://${REDIS_HOST}:${REDIS_PORT}`;
 
 const redisClient = redis.createClient(redisEndpointUri, {
     password: REDIS_PASSWORD
