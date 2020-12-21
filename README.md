@@ -31,8 +31,6 @@ npm run dev
 
 To make deploys work, you need to create free account in https://redislabs.com/try-free/ and get Redis' instance informations - REDIS_ENDPOINT_URI and REDIS_PASSWORD. You must pass them as environmental variables.
 
-`redis://` is added to REDIS_ENDPOINT_URI automatically, please don't include it.
-
 ### Google Cloud Run
 
 [![Run on Google
