@@ -3,6 +3,7 @@
 ![alt text](https://github.com/RemoteCraftsmen/redis-rate-limiting/blob/main/preview.png?raw=true)
 
 ## How it works
+
 This app has been build usigng `exoress-rate-limit` and `rate-limit-redis` library which will block connections from a client after surpassing certain amount of requests (default: 10) per time (default: 10 sec)
 
 The application will return after each request the following headers. That will let the user know how many requests they have remaining before the run over the limit.
@@ -19,6 +20,7 @@ On the 10th run server should return an HTTP status code of **429 Too Many Reque
 ```
 "PEXPIRE", "MULTI", "DEL", "PTTL", "EXEC", "DECR", "INCR"
 ```
+
 ## Hot to run it locally?
 
 ### Prerequisites
@@ -36,7 +38,7 @@ git clone https://github.com/RemoteCraftsmen/redis-rate-limiting/
 cp .env.example .env
 
 # install dependencies
-npm cache clean && npm install
+npm install
 
 # run docker compose or install redis manually
 docker network create global
