@@ -9,7 +9,7 @@ module.exports = {
         endpointUri: REDIS_ENDPOINT_URI
             ? sanitizeRedisUrl(REDIS_ENDPOINT_URI)
             : `${sanitizeRedisUrl(REDIS_HOST)}:${REDIS_PORT}`,
-        password: REDIS_PASSWORD
+        password: REDIS_PASSWORD || undefined
     },
     app: {
         port: PORT || 3000
