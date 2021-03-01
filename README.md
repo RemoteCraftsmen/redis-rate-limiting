@@ -48,9 +48,17 @@ npm run dev
 
 ```
 
+### Env variables:
+
+-   PORT - port that server is listening on.
+-   REDIS_HOST - host for redis instance. Can be with `redis://` or without.
+-   REDIS_PORT - port for redis instance.
+-   REDIS_PASSWORD - password for redis. Running redis by docker-compose, there's no password. Running by https://redislabs.com/try-free/ you have to pass this variable.
+-   REDIS_ENDPOINT_URI - redis password, port and host encoded in redis uri take precedence over other environment variables.
+
 ## Deployment
 
-To make deploys work, you need to create free account in https://redislabs.com/try-free/ and get Redis' instance informations - REDIS_ENDPOINT_URI and REDIS_PASSWORD. You must pass them as environmental variables.
+To make deploys work, you need to create free account in https://redislabs.com/try-free/ and get Redis' instance informations - REDIS_ENDPOINT_URI and REDIS_PASSWORD. You must pass them as environmental variables (in .env file or by server config, like `Heroku Config Variables`).
 
 ### Google Cloud Run
 
